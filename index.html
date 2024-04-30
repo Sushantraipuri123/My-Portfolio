@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <met#aeb3b8et="utf-8">
+        
         <title>   Sushant Raipuri Portfolio </title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
         <meta content="Free Website Template" name="description">
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
+       
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -285,7 +283,7 @@
                     <section class="py-5 wow fadeInUp" data-wow-delay="0.1s" id="contact">
                         <h1 class="title pb-3 mb-5">Contact Me</h1>
 						
-                        <form>
+                        <form >
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -312,7 +310,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                    <button class="btn btn-primary w-100 py-3"  type="submit" onclick="sendMsg()">Send Message</button>
                                 </div>
                             </div>
                         </form>
@@ -323,16 +321,14 @@
                     <section class="wow fadeIn" data-wow-delay="0.1s">
                         <div class="bg-secondary text-light text-center p-5">
                             <div class="d-flex justify-content-center mb-4">
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-dark btn-square mx-1" href="https://twitter.com/raipuri_sushant" target="_blank"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-linkedin-in" ></i></a>
                             </div>
                             <div class="d-flex justify-content-center mb-3">
                                 <a class="text-light px-3 border-end" href="#">Privacy</a>
                                 <a class="text-light px-3 border-end" href="#">Terms</a>
                                 <a class="text-light px-3 border-end" href="#">FAQs</a>
-                                <a class="text-light px-3" href="#">Help</a>
+                                
                             </div>
 							
                             
@@ -362,8 +358,19 @@
         <!-- Contact Javascript File -->
         <script src="mail/jqBootstrapValidation.min.js"></script>
         <script src="mail/contact.js"></script>
-
+ <script src="/js/contactscript.js"></script>
         
         <script src="js/main.js"></script>
+
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "pFJwAxD66KyV8YHE-",
+      });
+   })();
+</script>
     </body>
 </html>
