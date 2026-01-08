@@ -14,7 +14,7 @@ export function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const TO_EMAIL = "jorgjack40@gmail.com"; // <-- set your real address
+  const TO_EMAIL = "cashu853@gmail.com"; // <-- set your real address
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -60,8 +60,8 @@ export function Contact() {
 
   const setField =
     <K extends keyof FormState>(key: K) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setForm((f) => ({ ...f, [key]: e.target.value }));
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const validate = (): boolean => {
     const next: typeof errors = {};

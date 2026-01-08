@@ -12,12 +12,10 @@ const techs: Tech[] = [
   { name: "TypeScript", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg", type: "inner" },
   { name: "Node.js", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg", type: "outer" },
   { name: "Tailwind", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg", type: "inner" },
-  { name: "Three.js", logo: "https://cdn.simpleicons.org/threedotjs/ffffff", type: "outer" },
-  { name: "Vite", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/vite/vite-original.svg", type: "inner" },
-  { name: "PostgreSQL", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg", type: "outer" },
-  { name: "Docker", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg", type: "inner" },
-  { name: "Framer", logo: "https://cdn.simpleicons.org/framer/0055FF", type: "outer" },
-  { name: "Git", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg", type: "outer" },
+  { name: "Redux", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg", type: "outer" },
+  { name: "Express", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg", type: "inner" },
+  { name: "MongoDB", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg", type: "outer" },
+  { name: "JavaScript", logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg", type: "inner" },
 ];
 
 export default function NexusTechOrbit() {
@@ -35,7 +33,7 @@ export default function NexusTechOrbit() {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
-    
+
     const { width, height, left, top } = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - left;
     const mouseY = e.clientY - top;
@@ -50,25 +48,25 @@ export default function NexusTechOrbit() {
     setTilt({ x: 20, y: 0 });
   };
 
-  const OrbitRing = ({ 
-    items, 
-    radius, 
+  const OrbitRing = ({
+    items,
+    radius,
     direction,
-    zOffset = 0 
-  }: { 
-    items: Tech[], 
-    radius: number, 
-    speed: number, 
+    zOffset = 0
+  }: {
+    items: Tech[],
+    radius: number,
+    speed: number,
     direction: number,
-    zOffset?: number 
+    zOffset?: number
   }) => {
     return (
-      <div 
+      <div
         className="absolute inset-0 flex items-center justify-center"
-        style={{ 
-          width: radius * 2, 
-          height: radius * 2, 
-          top: `calc(50% - ${radius}px)`, 
+        style={{
+          width: radius * 2,
+          height: radius * 2,
+          top: `calc(50% - ${radius}px)`,
           left: `calc(50% - ${radius}px)`,
           transform: `rotateZ(${rotation * direction}deg)`,
           transition: 'transform 0.016s linear'
@@ -84,7 +82,7 @@ export default function NexusTechOrbit() {
                 transform: `rotate(${angle}deg) translate(${radius}px) translateZ(${zOffset}px)`,
               }}
             >
-              <div 
+              <div
                 className="group relative"
                 style={{
                   transform: `rotate(${-angle - rotation * direction}deg)`,
@@ -95,30 +93,30 @@ export default function NexusTechOrbit() {
                 <div className="relative w-20 h-20 transition-all duration-300 hover:scale-110 cursor-pointer preserve-3d">
                   {/* Card back glow */}
                   <div className="absolute inset-0 bg-cyan-500/20 rounded-2xl blur-xl" />
-                  
+
                   {/* Main card */}
                   <div className="relative w-full h-full bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-2xl border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.3)] backdrop-blur-sm overflow-hidden group-hover:border-cyan-400 group-hover:shadow-[0_0_50px_rgba(6,182,212,0.5)] transition-all">
                     {/* Top edge highlight */}
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
-                    
+
                     {/* Corner accents */}
                     <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-cyan-400/40" />
                     <div className="absolute top-1 right-1 w-3 h-3 border-t border-r border-cyan-400/40" />
                     <div className="absolute bottom-1 left-1 w-3 h-3 border-b border-l border-cyan-400/40" />
                     <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-cyan-400/40" />
-                    
+
                     {/* Inner glow */}
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10" />
-                    
+
                     {/* Logo container */}
                     <div className="relative w-full h-full flex items-center justify-center p-4">
-                      <img 
-                        src={tech.logo} 
-                        alt={tech.name} 
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
                         className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.4)] group-hover:scale-110 transition-transform"
                       />
                     </div>
-                    
+
                     {/* Bottom label */}
                     <div className="absolute bottom-1 left-0 right-0 text-center">
                       <span className="text-[9px] font-mono text-cyan-300/70 tracking-wider">{tech.name}</span>
@@ -141,10 +139,10 @@ export default function NexusTechOrbit() {
   };
 
   return (
-    <section 
-      ref={containerRef} 
+    <section
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      id="tech"
       className="relative min-h-screen bg-[#0a0e1a] overflow-hidden flex flex-col items-center justify-center"
     >
       {/* Animated background */}
@@ -162,14 +160,14 @@ export default function NexusTechOrbit() {
         <div className="flex items-center gap-3 px-4 py-2 bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full shadow-[0_0_30px_rgba(6,182,212,0.2)]">
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-cyan-400 animate-pulse' : 'bg-slate-600'}`} />
-            <span className="text-xs font-mono text-cyan-300">h amste telth s inicer Active</span>
+            <span className="text-xs font-mono text-cyan-300">Tech Stack</span>
           </div>
           <div className="w-px h-4 bg-cyan-500/30" />
-          <button 
+          <button
             onClick={() => setIsActive(!isActive)}
             className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
           >
-            UP50VEBE
+            Core
           </button>
         </div>
       </div>
@@ -177,22 +175,22 @@ export default function NexusTechOrbit() {
       {/* Header */}
       <div className="relative z-20 text-center mb-16">
         <h2 className="text-6xl md:text-8xl font-black tracking-tight">
-          <span className="text-white">NEXUS </span>
+          <span className="text-white">TECH </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400">
-            ENGINE
+            STACK
           </span>
         </h2>
       </div>
 
       {/* 3D Orbit System */}
-      <div 
+      <div
         className="relative flex items-center justify-center w-[900px] h-[900px] max-w-[95vw] max-h-[95vw]"
-        style={{ 
+        style={{
           perspective: '1200px',
           transformStyle: 'preserve-3d'
         }}
       >
-        <div 
+        <div
           style={{
             transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
             transformStyle: 'preserve-3d',
@@ -205,7 +203,7 @@ export default function NexusTechOrbit() {
             <div className="relative w-40 h-40">
               {/* Outer glow */}
               <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
-              
+
               {/* Rotating ring segments */}
               <div className="absolute inset-0 animate-spin-slow">
                 {[0, 90, 180, 270].map((angle, i) => (
@@ -218,16 +216,16 @@ export default function NexusTechOrbit() {
                   </div>
                 ))}
               </div>
-              
+
               {/* Inner rings */}
               <div className="absolute inset-4 rounded-full border-2 border-cyan-500/50 animate-pulse" />
               <div className="absolute inset-8 rounded-full border border-cyan-400/30" />
-              
+
               {/* Core circle */}
               <div className="absolute inset-12 rounded-full bg-gradient-to-br from-slate-900 to-slate-800 border-2 border-cyan-500/60 shadow-[0_0_60px_rgba(6,182,212,0.4)] flex items-center justify-center">
                 <span className="text-xl font-black text-cyan-300 tracking-wider">Core</span>
               </div>
-              
+
               {/* Center dot */}
               <div className="absolute top-1/2 left-1/2 w-2 h-2 -translate-x-1/2 -translate-y-1/2 bg-cyan-400 rounded-full shadow-[0_0_20px_rgba(6,182,212,0.8)]" />
             </div>
@@ -238,26 +236,26 @@ export default function NexusTechOrbit() {
             <div className="w-[460px] h-[460px] rounded-full border border-cyan-500/20" />
             <div className="absolute inset-0 w-[460px] h-[460px] rounded-full border border-dashed border-cyan-500/10" />
           </div>
-          
+
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <div className="w-[740px] h-[740px] rounded-full border border-cyan-500/15" />
             <div className="absolute inset-0 w-[740px] h-[740px] rounded-full border border-dashed border-cyan-500/5" />
           </div>
 
           {/* Inner Ring */}
-          <OrbitRing 
-            items={techs.filter(t => t.type === 'inner')} 
-            radius={210} 
-            speed={1} 
+          <OrbitRing
+            items={techs.filter(t => t.type === 'inner')}
+            radius={210}
+            speed={1}
             direction={1}
             zOffset={20}
           />
 
           {/* Outer Ring */}
-          <OrbitRing 
-            items={techs.filter(t => t.type === 'outer')} 
-            radius={350} 
-            speed={1} 
+          <OrbitRing
+            items={techs.filter(t => t.type === 'outer')}
+            radius={350}
+            speed={1}
             direction={-1}
             zOffset={10}
           />

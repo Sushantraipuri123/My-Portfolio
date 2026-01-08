@@ -15,7 +15,7 @@ export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Array of refs to track the position of the 4 menu items
   const menuItemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -67,8 +67,8 @@ export default function HeroSection() {
 
     // Create the bolt from top to the specific menu item
     const path = createBoltPath(
-      { x: targetX + (Math.random() * 400 - 200), y: -50 }, 
-      { x: targetX, y: targetY }, 
+      { x: targetX + (Math.random() * 400 - 200), y: -50 },
+      { x: targetX, y: targetY },
       150
     );
 
@@ -81,7 +81,7 @@ export default function HeroSection() {
 
     // Visual feedback for the strike
     flashIntensity.current = 0.7;
-    
+
     // Reveal the specific item with a "power-on" glow
     gsap.to(el, {
       opacity: 1,
@@ -89,18 +89,26 @@ export default function HeroSection() {
       duration: 0.4,
       ease: "power4.out",
       onStart: () => {
-        gsap.fromTo(el, 
-          { filter: "brightness(10) blur(10px)" }, 
+        gsap.fromTo(el,
+          { filter: "brightness(10) blur(10px)" },
           { filter: "brightness(1) blur(0px)", duration: 1 }
         );
       }
     });
   };
 
+  // --- AUTO-START ---
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      startInitialization();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const startInitialization = () => {
     if (isEngaged) return;
     setIsEngaged(true);
-    audioRef.current?.play();
+    audioRef.current?.play().catch(() => { }); // Catch autoplay blocks
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -112,7 +120,7 @@ export default function HeroSection() {
 
     // Sequence the 4 strikes
     [0, 1, 2, 3].forEach((val, i) => {
-      tl.add(() => strikeMenuLink(val), i * 0.7 + 0.5); 
+      tl.add(() => strikeMenuLink(val), i * 0.7 + 0.5);
     });
   };
 
@@ -138,7 +146,7 @@ export default function HeroSection() {
         ctx.beginPath();
         ctx.strokeStyle = `rgba(255, 255, 255, ${bolt.opacity})`;
         ctx.lineWidth = bolt.width;
-        
+
         if (bolt.segments.length > 0) {
           ctx.moveTo(bolt.segments[0].x, bolt.segments[0].y);
           bolt.segments.forEach(p => ctx.lineTo(p.x, p.y));
@@ -155,32 +163,32 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative flex min-h-screen flex-col items-center justify-center bg-[#050505] overflow-hidden"
     >
       <audio ref={audioRef} src="/horror.mp3" />
       <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-40 h-full w-full" />
-      
+
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#050505] to-[#050505]" />
 
       <div className="glitch-ui z-20 grid w-full max-w-screen-2xl grid-cols-1 md:grid-cols-3 px-8 md:px-12 items-center">
-        
+
         {/* LEFT MENU (Strikes 1 & 2) */}
         <div className="flex flex-col gap-16 items-center md:items-start order-2 md:order-1 mt-10 md:mt-0">
           <div ref={el => { menuItemsRef.current[0] = el; }} className="opacity-0 translate-y-10">
-            <MenuLink index="01" label="PROJECTS" sub="Visual Code" />
+            <MenuLink index="01" label="PROJECTS" sub="Visual Code" link="#projects" />
           </div>
           <div ref={el => { menuItemsRef.current[1] = el; }} className="opacity-0 translate-y-10">
-            <MenuLink index="02" label="STACK" sub="Tech Core" />
+            <MenuLink index="02" label="STACK" sub="Tech Core" link="#tech" />
           </div>
         </div>
 
         {/* CENTER TITLE (Revealed after all strikes) */}
         <div className="center-content opacity-0 scale-90 flex flex-col items-center text-center py-10 md:py-20 relative order-1 md:order-2">
-          <h1 className="text-[10px] font-bold tracking-[1.5em] text-zinc-600 uppercase mb-8">Neural Engine Active</h1>
+          <h1 className="text-[10px] font-bold tracking-[1.5em] text-zinc-600 uppercase mb-8">System Online</h1>
           <h2 className="text-6xl md:text-8xl lg:text-7xl font-black italic text-white tracking-tighter leading-[0.85] relative z-10">
-            FRONT END <br /> <span className="stroke-text text-transparent text-6xl md:text-8xl lg:text-9xl">DEVELOPER</span>
+            MERN STACK <br /> <span className="stroke-text text-transparent text-6xl md:text-8xl lg:text-9xl">DEVELOPER</span>
           </h2>
           <div className="mt-12 h-[1px] w-48 bg-zinc-900 relative overflow-hidden">
             <div className={`h-full bg-white transition-all duration-[2s] ${isComplete ? 'w-full' : 'w-0'}`} />
@@ -190,30 +198,29 @@ export default function HeroSection() {
         {/* RIGHT MENU (Strikes 3 & 4) */}
         <div className="flex flex-col gap-16 items-center md:items-end order-3 mt-10 md:mt-0">
           <div ref={el => { menuItemsRef.current[2] = el; }} className="opacity-0 translate-y-10">
-            <MenuLink index="03" label="ABOUT" sub="The Logic" />
+            <MenuLink index="03" label="ABOUT" sub="The Logic" link="#about" />
           </div>
           <div ref={el => { menuItemsRef.current[3] = el; }} className="opacity-0 translate-y-10">
-            <MenuLink index="04" label="SIGNAL" sub="Secure Line" />
+            <MenuLink index="04" label="CONTACT" sub="Secure Line" link="#contact" />
           </div>
         </div>
       </div>
 
       {!isEngaged && (
-        <div 
-          onClick={startInitialization}
-          className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-[#030305]/95 backdrop-blur-sm cursor-pointer"
+        <div
+          className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-[#030305]/95 backdrop-blur-sm cursor-wait"
         >
           <div className="relative group mb-8">
-             <div className="absolute -inset-6 rounded-full bg-indigo-500/20 animate-ping" />
-             <CpuChipIcon className="relative h-16 w-16 text-white" />
+            <div className="absolute -inset-6 rounded-full bg-indigo-500/20 animate-ping" />
+            <CpuChipIcon className="relative h-16 w-16 text-white" />
           </div>
-          <p className="text-[11px] tracking-[1em] text-white uppercase animate-pulse">Establish Connection</p>
+          <p className="text-[11px] tracking-[1em] text-white uppercase animate-pulse">Establishing Connection</p>
         </div>
       )}
 
       <div className="absolute bottom-10 w-full flex justify-between px-8 md:px-16 text-[8px] font-mono tracking-widest text-zinc-800 uppercase">
-        <span>Impact_OS: v4.0.1</span>
-        <span>©2024_RRRR</span>
+        <span>Sushant Portfolio v1.0</span>
+        <span>©2024_SUSHANT</span>
       </div>
 
       <style>{`
@@ -224,9 +231,9 @@ export default function HeroSection() {
   );
 }
 
-function MenuLink({ index, label, sub }: { index: string, label: string; sub: string }) {
+function MenuLink({ index, label, sub, link }: { index: string, label: string; sub: string; link: string }) {
   return (
-    <div className="group cursor-pointer flex flex-col items-center md:items-start">
+    <a href={link} className="group cursor-pointer flex flex-col items-center md:items-start">
       <div className="flex items-center gap-3">
         <span className="text-[10px] font-mono text-indigo-500/50 group-hover:text-indigo-400">{index}</span>
         <h3 className="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tighter text-white/40 group-hover:text-white transition-all duration-500 ease-out">
@@ -234,6 +241,6 @@ function MenuLink({ index, label, sub }: { index: string, label: string; sub: st
         </h3>
       </div>
       <p className="text-[9px] tracking-[0.4em] text-zinc-700 mt-2 uppercase transition-colors group-hover:text-indigo-400/80">// {sub}</p>
-    </div>
+    </a>
   );
 }

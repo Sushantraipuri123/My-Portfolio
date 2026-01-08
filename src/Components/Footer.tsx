@@ -2,20 +2,19 @@ import { Github, Linkedin, Twitter, ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   const socialLinks = [
-    { name: "LI", href: "https://www.linkedin.com/in/rahul-dev-516906225/", icon: <Linkedin size={18} /> },
-    { name: "TW", href: "https://x.com/rdev01431", icon: <Twitter size={18} /> },
-    { name: "GH", href: "https://github.com/rdev014", icon: <Github size={18} /> },
+    { name: "LI", href: "https://www.linkedin.com/", icon: <Linkedin size={18} /> },
+    { name: "TW", href: "https://x.com/", icon: <Twitter size={18} /> },
+    { name: "GH", href: "https://github.com/Sushantraipuri123", icon: <Github size={18} /> },
   ];
 
-  const quickLinks = ["About", "Projects", "Tech Specs", "Contact"];
+  const quickLinks = ["About", "#projects", "#tech", "Contact"];
 
   return (
     <footer className="relative bg-[#020204] text-white pt-32 pb-10 overflow-hidden border-t border-white/5">
       {/* BACKGROUND WATERMARK - Huge, subtle text for massive scale */}
       <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 pointer-events-none select-none">
-        <h2 className="text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter uppercase italic whitespace-nowrap px-12">
-          RAHUL DEV
-        </h2>
+          SUSHANT RAIPURI
+       
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 z-10">
@@ -36,7 +35,7 @@ export default function Footer() {
               </a>
               <div className="flex items-center gap-2 px-6 py-5 border border-white/10 rounded-full backdrop-blur-md">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs font-mono tracking-widest text-zinc-400">AVAILABILITY: Q1 2026</span>
+                <span className="text-xs font-mono tracking-widest text-zinc-400">AVAILABILITY: Mon - Sun</span>
               </div>
             </div>
           </div>
@@ -48,8 +47,8 @@ export default function Footer() {
               <ul className="space-y-4">
                 {quickLinks.map((link) => (
                   <li key={link}>
-                    <a href={`#${link.toLowerCase().replace(" ", "")}`} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors hover:underline underline-offset-8">
-                      {link}
+                    <a href={link.startsWith("#") ? link : `#${link.toLowerCase()}`} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors hover:underline underline-offset-8">
+                      {link.replace("#", "").replace(/.*/, (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).replace("-"," "))}
                     </a>
                   </li>
                 ))}
@@ -81,14 +80,14 @@ export default function Footer() {
         <div className="mt-32 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono tracking-widest text-zinc-600 uppercase">
           <div className="flex items-center gap-8">
             <span>Local Time: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} IST</span>
-            <span className="hidden sm:block">Status: Optimized for v4.0</span>
+           
           </div>
           
           <div className="text-zinc-600">
-            &copy; {new Date().getFullYear()} RAHUL_DEV / ALL_RIGHTS_RESERVED
+            &copy; {new Date().getFullYear()} SUSHANT_RAIPURI / ALL_RIGHTS_RESERVED
           </div>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 }

@@ -2,9 +2,9 @@ import { ArrowUpRightIcon } from "@heroicons/react/16/solid";
 import { useState, useEffect } from "react";
 
 const navigation = [
-  { name: "About", href: "about", code: "01" },
-  { name: "Projects", href: "projects", code: "02" },
-  { name: "Tech Specs", href: "tech", code: "03" },
+  { name: "About", href: "#about", code: "01" },
+  { name: "Projects", href: "#projects", code: "02" },
+  { name: "Tech Specs", href: "#tech", code: "03" },
 ];
 
 export default function Header() {
@@ -28,16 +28,14 @@ export default function Header() {
   };
 
   return (
-    <nav 
-      className={`fixed top-0 z-[100] w-full transition-all duration-700 ${
-        scrolled ? "py-4" : "py-8"
-      }`}
+    <nav
+      className={`fixed top-0 z-[100] w-full transition-all duration-700 ${scrolled ? "py-4" : "py-8"
+        }`}
     >
       <div className="mx-auto max-w-7xl px-6">
-        <div className={`relative flex h-14 items-center justify-between px-6 transition-all duration-500 border-x border-white/5 ${
-          scrolled ? "bg-black/60 backdrop-blur-xl border-y border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]" : "bg-transparent"
-        }`}>
-          
+        <div className={`relative flex h-14 items-center justify-between px-6 transition-all duration-500 border-x border-white/5 ${scrolled ? "bg-black/60 backdrop-blur-xl border-y border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]" : "bg-transparent"
+          }`}>
+
           {/* Decorative Corner Accents (Top Left & Bottom Right) */}
           <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30" />
           <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30" />
@@ -49,7 +47,7 @@ export default function Header() {
               className="font-black text-xs tracking-[0.4em] text-white uppercase cursor-pointer hover:tracking-[0.6em] transition-all duration-500"
               onClick={(e) => handleScroll(e as any, "#")}
             >
-              Rahul Dev // <span className="text-zinc-500 font-light">OS v2.0</span>
+              Sushant Raipuri // <span className="text-zinc-500 font-light">OS v2.0</span>
             </span>
           </div>
 
@@ -60,15 +58,14 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleScroll(e, item.href)}
-                className={`group relative flex items-center gap-2 px-6 py-2 transition-all duration-300 ${
-                  current === item.href ? "text-white" : "text-zinc-500 hover:text-zinc-300"
-                }`}
+                className={`group relative flex items-center gap-2 px-6 py-2 transition-all duration-300 ${current === item.href ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                  }`}
               >
                 {/* Micro-label */}
                 <span className="text-[7px] font-mono opacity-50 group-hover:text-white transition-colors">
                   {item.code}
                 </span>
-                
+
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase">
                   {item.name}
                 </span>
@@ -83,10 +80,6 @@ export default function Header() {
 
           {/* Right: The Signal Button */}
           <div className="flex items-center gap-6">
-             <div className="hidden lg:block text-[8px] font-mono text-zinc-600 tracking-widest">
-               SIGNAL_STATUS: <span className="text-emerald-500 animate-pulse">STABLE</span>
-             </div>
-
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "#contact")}
@@ -95,7 +88,7 @@ export default function Header() {
               {/* Button Accents */}
               <div className="absolute -top-[1px] -left-[1px] w-1 h-1 bg-black group-hover:bg-white" />
               <div className="absolute -bottom-[1px] -right-[1px] w-1 h-1 bg-black group-hover:bg-white" />
-              
+
               Let's Talk
               <ArrowUpRightIcon className="h-3 w-3 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>

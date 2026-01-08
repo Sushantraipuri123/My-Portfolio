@@ -74,7 +74,7 @@ export default function ProjectsSection() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-   
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -86,8 +86,8 @@ export default function ProjectsSection() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const particles: Array<{x: number, y: number, vx: number, vy: number, life: number}> = [];
-   
+    const particles: Array<{ x: number, y: number, vx: number, vy: number, life: number }> = [];
+
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -99,24 +99,24 @@ export default function ProjectsSection() {
     }
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-     
+
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-       
+
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-       
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(6, 182, 212, ${p.life * 0.3})`;
         ctx.fill();
-       
+
         particles.forEach(other => {
           const dx = other.x - p.x;
           const dy = other.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-         
+
           if (dist < 120) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -127,10 +127,10 @@ export default function ProjectsSection() {
           }
         });
       });
-     
+
       requestAnimationFrame(animate);
     };
-   
+
     animate();
 
     return () => {
@@ -215,7 +215,7 @@ export default function ProjectsSection() {
   const prev = () => centerTo(Math.max(0, active - 1));
   const next = () => centerTo(Math.min(projects.length - 1, active + 1));
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-[#0a0e1a] min-h-screen py-24">
+    <section id="projects" ref={sectionRef} className="relative overflow-hidden bg-[#0a0e1a] min-h-screen py-24">
       {/* Particle Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
       {/* Animated Background */}
@@ -234,13 +234,13 @@ export default function ProjectsSection() {
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             Project Archives
           </div>
-         
+
           <h2 className="text-6xl md:text-8xl font-black tracking-tight mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-500">
               Featured Work
             </span>
           </h2>
-         
+
           <p className="text-lg text-cyan-200/70 max-w-2xl mx-auto mb-8">
             Drag or swipe to explore immersive project previews
           </p>
@@ -262,11 +262,10 @@ export default function ProjectsSection() {
                 <button
                   key={i}
                   onClick={() => centerTo(i)}
-                  className={`h-2 rounded-full transition-all ${
-                    i === active
+                  className={`h-2 rounded-full transition-all ${i === active
                       ? 'w-8 bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_20px_rgba(6,182,212,0.6)]'
                       : 'w-2 bg-cyan-500/30 hover:bg-cyan-500/50'
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -425,7 +424,7 @@ function ProjectCard({
     el.style.setProperty("--mx", `${(x * 100).toFixed(2)}%`);
     el.style.setProperty("--my", `${(y * 100).toFixed(2)}%`);
   };
- 
+
   const onLeave = () => {
     const el = cardRef.current;
     if (!el) return;
@@ -457,7 +456,7 @@ function ProjectCard({
       {/* Glowing border */}
       <div className={`absolute -inset-[1px] ${accentColors.border} ${accentColors.glow} rounded-3xl blur-sm`} />
       <div className={`absolute -inset-[2px] bg-gradient-to-br ${accentColors.bg} to-transparent rounded-3xl opacity-40 animate-pulse`} />
-     
+
       {/* Main card */}
       <div className={`relative bg-slate-900/95 backdrop-blur-xl rounded-3xl border ${accentColors.border} overflow-hidden`}>
         {/* Scan line */}
@@ -494,7 +493,7 @@ function ProjectCard({
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
           {/* LQIP */}
           <img src={coverLow} alt="" className="absolute inset-0 h-full w-full object-cover blur-lg scale-110" />
-         
+
           {/* Hi-res image */}
           <img
             src={coverHi}
