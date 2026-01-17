@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
+import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,8 +14,14 @@ type FormState = {
 export function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const TO_EMAIL = "cashu853@gmail.com"; // <-- set your real address
+  const TO_EMAIL = "cashu853@gmail.com";
+
+  // EMAILJS CREDENTIALS
+  const SERVICE_ID = "service_f36i37l";
+  const TEMPLATE_ID = "template_gxgenv9";
+  const PUBLIC_KEY = "pFJwAxD66KyV8YHE-";
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -80,20 +87,27 @@ export function Contact() {
     setServerMsg("");
 
     try {
-      // Replace with your endpoint or Formspree/EmailJS if not using an API route
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, to: TO_EMAIL }),
-      });
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      // Sending email using EmailJS
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          subject: form.subject,
+          message: form.message,
+          to_email: TO_EMAIL, // accessing this in template as {{to_email}}
+        },
+        PUBLIC_KEY
+      );
 
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
       setErrors({});
     } catch (err: any) {
+      console.error("EmailJS Error:", err);
       setStatus("error");
-      setServerMsg(err?.message || "Something went wrong. Please try again or email me directly.");
+      setServerMsg("Failed to send email. Please check your connection or EmailJS config.");
     }
   };
 
@@ -170,7 +184,7 @@ export function Contact() {
             />
 
             {/* Form rows: To / From / Subject / Message */}
-            <form onSubmit={onSubmit} className="relative z-10 p-5 sm:p-6">
+            <form ref={formRef} onSubmit={onSubmit} className="relative z-10 p-5 sm:p-6">
               {/* To */}
               <Row label="To">
                 <span className="inline-flex items-center rounded-md bg-white/10 px-2.5 py-1 text-xs text-zinc-200 ring-1 ring-white/10">

@@ -21,6 +21,7 @@ export default function HeroSection() {
 
   const [isEngaged, setIsEngaged] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [showStartPrompt, setShowStartPrompt] = useState(false);
 
   const activeBolts = useRef<LightningBolt[]>([]);
   const flashIntensity = useRef(0);
@@ -100,7 +101,7 @@ export default function HeroSection() {
   // --- AUTO-START ---
   useEffect(() => {
     const timer = setTimeout(() => {
-      startInitialization();
+      setShowStartPrompt(true);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -208,13 +209,36 @@ export default function HeroSection() {
 
       {!isEngaged && (
         <div
-          className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-[#030305]/95 backdrop-blur-sm cursor-wait"
+          onClick={() => showStartPrompt && startInitialization()}
+          className={`absolute inset-0 z-[100] flex flex-col items-center justify-center bg-[#030305]/95 backdrop-blur-sm transition-all duration-500 ${showStartPrompt ? 'cursor-pointer' : 'cursor-wait'}`}
         >
-          <div className="relative group mb-8">
-            <div className="absolute -inset-6 rounded-full bg-indigo-500/20 animate-ping" />
-            <CpuChipIcon className="relative h-16 w-16 text-white" />
+          <div className="relative group mb-10">
+            {/* Ripple Effect - Only active when prompt is shown */}
+            {showStartPrompt && (
+              <>
+                <div className="absolute -inset-4 rounded-full border border-indigo-500/30 animate-ripple" style={{ animationDelay: '0s' }} />
+                <div className="absolute -inset-8 rounded-full border border-indigo-500/20 animate-ripple" style={{ animationDelay: '0.6s' }} />
+                <div className="absolute -inset-12 rounded-full border border-indigo-500/10 animate-ripple" style={{ animationDelay: '1.2s' }} />
+              </>
+            )}
+
+            {/* Icon Background */}
+            <div className={`absolute -inset-6 rounded-full bg-indigo-500/5 transition-all duration-500 ${showStartPrompt ? 'bg-indigo-500/20 scale-110 shadow-[0_0_30px_rgba(99,102,241,0.3)]' : 'animate-pulse'}`} />
+
+            <CpuChipIcon className={`relative h-16 w-16 transition-all duration-500 ${showStartPrompt ? 'text-indigo-400 drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]' : 'text-zinc-600'}`} />
           </div>
-          <p className="text-[11px] tracking-[1em] text-white uppercase animate-pulse">Establishing Connection</p>
+
+          <div className={`flex flex-col items-center gap-3 transition-all duration-500 ${showStartPrompt ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-50'}`}>
+            <h3 className={`text-xl font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${showStartPrompt ? 'text-white' : 'text-zinc-500'}`}>
+              {showStartPrompt ? "System Ready" : "Initializing"}
+            </h3>
+
+            <div className={`px-6 py-2 border border-indigo-500/30 bg-indigo-500/5 rounded-full backdrop-blur-md transition-all duration-300 ${showStartPrompt ? 'opacity-100 hover:bg-indigo-500/10 hover:border-indigo-500/50' : 'opacity-0 scale-95'}`}>
+              <p className="text-[10px] tracking-[0.2em] text-indigo-300 uppercase">
+                {showStartPrompt ? "Click anywhere to Start" : ""}
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -226,6 +250,13 @@ export default function HeroSection() {
       <style>{`
         .stroke-text { -webkit-text-stroke: 1px rgba(255,255,255,0.7); }
         .glitch-ui { will-change: filter, transform; }
+        @keyframes ripple {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(2); opacity: 0; }
+        }
+        .animate-ripple {
+          animation: ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
       `}</style>
     </section>
   );
